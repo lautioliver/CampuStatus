@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Zone {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  name        String
+  status      String
+  capacity    String
+  occupancy   Int          @default(0)
+  voteCount   Int          @default(0)
+  lastUpdate  DateTime     @default(now())
+  active      Boolean      @default(true)
+  reports     Report[]
+  trendPoints TrendPoint[]
+}
+
+model ReportLevel {
+  id          String   @id
+  label       String
+  statusColor String
+  score       Int
+  sortOrder   Int
+  reports     Report[]
+}
+
+model Report {
+  id        String      @id @default(cuid())
+  zoneId    String
+  levelId   String
+  clientIp  String?
+  createdAt DateTime    @default(now())
+  zone      Zone        @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  level     ReportLevel @relation(fields: [levelId], references: [id])
+
+  @@index([zoneId, createdAt])
+}
+
+model TrendPoint {
+  id         String   @id @default(cuid())
+  zoneId     String
+  score      Int
+  recordedAt DateTime @default(now())
+  zone       Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+
+  @@index([zoneId, recordedAt])
+}
+
+model AllowedCampusIp {
+  id          String  @id @default(cuid())
+  ipAddress   String  @unique
+  description String?
+  active      Boolean @default(true)
+}

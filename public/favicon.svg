@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 100" fill="none">
+  <style>
+    .logo-text { fill: #4a4e5a; }
+    @media (prefers-color-scheme: dark) {
+      .logo-text { fill: #e2e8f0; }
+    }
+  </style>
+  <path class="logo-text" fill-rule="evenodd" d="M55 8C32 8 13 27 13 50c0 23 19 42 42 42v-16c-15 0-26-12-26-26S40 24 55 24V8z"/>
+  <circle cx="36" cy="34" r="7.2" fill="#E30613"/>
+  <circle cx="36" cy="50" r="7.2" fill="#FFCC00"/>
+  <circle cx="36" cy="66" r="7.2" fill="#00B050"/>
+</svg>
