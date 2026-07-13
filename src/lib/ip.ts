@@ -19,7 +19,9 @@ function parseList(value: string): string[] {
 
 export function getClientIp(req: NextRequest, trustProxy: boolean): string {
   if (trustProxy) {
-    const forwarded = req.headers.get('x-forwarded-for');
+    const forwarded =
+      req.headers.get('x-forwarded-for') ??
+      req.headers.get('x-vercel-forwarded-for');
     if (forwarded) {
       return normalizeIp(forwarded.split(',')[0]?.trim() ?? '');
     }
@@ -50,7 +52,10 @@ export async function getAllowedCampusIps(): Promise<string[]> {
 }
 
 export function isTrustProxyEnabled(): boolean {
-  return process.env.TRUST_PROXY === 'true';
+  if (process.env.TRUST_PROXY === 'true') return true;
+  if (process.env.TRUST_PROXY === 'false') return false;
+  // En Vercel siempre hay reverse proxy; leer la IP real del cliente.
+  return process.env.VERCEL === '1';
 }
 
 export async function isCampusIpAllowed(req: NextRequest): Promise<boolean> {

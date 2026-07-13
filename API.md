@@ -39,6 +39,7 @@ La validación de red se configura en el servidor con `ALLOWED_CAMPUS_IPS` (ver 
 | Método | Ruta | Auth IP | Descripción |
 |---|---|---|---|
 | `GET` | `/api/health` | No | Health check del servicio |
+| `GET` | `/api/me/ip` | No | IP detectada y si puede votar (diagnóstico) |
 | `GET` | `/api/zones` | No | Listar todas las zonas activas |
 | `GET` | `/api/zones/:id` | No | Detalle de una zona |
 | `POST` | `/api/zones/:id/vote` | Sí | Registrar un reporte de ocupación |
