@@ -52,10 +52,9 @@ export async function getAllowedCampusIps(): Promise<string[]> {
 }
 
 export function isTrustProxyEnabled(): boolean {
-  if (process.env.TRUST_PROXY === 'true') return true;
-  if (process.env.TRUST_PROXY === 'false') return false;
-  // En Vercel siempre hay reverse proxy; leer la IP real del cliente.
-  return process.env.VERCEL === '1';
+  // Vercel siempre está detrás de un reverse proxy; ignorar TRUST_PROXY=false en prod.
+  if (process.env.VERCEL === '1') return true;
+  return process.env.TRUST_PROXY === 'true';
 }
 
 export async function isCampusIpAllowed(req: NextRequest): Promise<boolean> {
