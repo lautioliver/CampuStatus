@@ -2,7 +2,9 @@
 
 Sistema colaborativo de concurrencia para el campus universitario. Consultá la ocupación de bibliotecas, comedores y otros espacios, y enviá reportes anónimos con cooldown por zona.
 
-**Stack:** Next.js 15 · React 19 · Prisma · SQLite (dev) / PostgreSQL (prod) · Tailwind CSS
+**Stack:** Next.js 15 · React 19 · Prisma · PostgreSQL (Neon) · Tailwind CSS
+
+**Producción:** [campu-status.vercel.app](https://campu-status.vercel.app)
 
 ---
 
@@ -18,8 +20,8 @@ Sistema colaborativo de concurrencia para el campus universitario. Consultá la 
 ```bash
 pnpm install
 pnpm approve-builds --all   # solo la primera vez (pnpm 10+)
-cp .env.example .env          # solo la primera vez
-pnpm db:migrate               # crea la base SQLite
+cp .env.example .env          # pegá tu DATABASE_URL de Neon
+pnpm db:migrate               # aplica migraciones en PostgreSQL
 pnpm db:seed                  # datos iniciales (3 zonas)
 pnpm dev                      # http://localhost:3000
 ```
@@ -46,18 +48,29 @@ Un solo comando levanta frontend y API en el mismo puerto.
 ## Variables de entorno
 
 ```bash
-DATABASE_URL="file:./prisma/dev.db"
-ALLOWED_CAMPUS_IPS=172.23.1.78,172.25.9.160
-TRUST_PROXY=false
-```
-
-En producción (Vercel + Neon/Supabase):
-
-```bash
 DATABASE_URL=postgresql://...
-ALLOWED_CAMPUS_IPS=<IP pública del campus>
-TRUST_PROXY=true
+ALLOWED_CAMPUS_IPS=172.23.1.78,172.25.9.160
+TRUST_PROXY=false   # true en Vercel
 ```
+
+---
+
+## Deploy en Vercel
+
+El build en Vercel corre migraciones y seed automáticamente (`vercel-build`). Solo tenés que conectar la base de datos:
+
+1. En [vercel.com](https://vercel.com) → proyecto **CampuStatus** → **Storage** → **Create Database** → **Neon**
+2. En **Settings → Environment Variables**, agregá:
+
+| Variable | Valor |
+|---|---|
+| `DATABASE_URL` | Connection string de Neon (se puede auto-vincular al crear la DB) |
+| `ALLOWED_CAMPUS_IPS` | `172.23.1.78,172.25.9.160` |
+| `TRUST_PROXY` | `true` |
+
+3. **Deployments → Redeploy**
+
+Verificá: `curl https://campu-status.vercel.app/api/zones`
 
 ---
 

@@ -9,9 +9,9 @@ Documentación para integrar CampuStatus desde otra aplicación (web, móvil, ba
 | Entorno | URL |
 |---|---|
 | Desarrollo local | `http://localhost:3000` |
-| Producción | `https://tu-dominio.com` |
+| Producción | `https://campu-status.vercel.app` |
 
-Todas las rutas son relativas a esa base. Ejemplo: `GET /api/zones` → `http://localhost:3000/api/zones`.
+Todas las rutas son relativas a esa base. Ejemplo: `GET /api/zones` → `https://campu-status.vercel.app/api/zones`.
 
 **Formato:** JSON en request y response.  
 **Charset:** UTF-8.  
@@ -274,7 +274,7 @@ ALLOWED_CAMPUS_IPS=127.0.0.1,::1,localhost
 ### JavaScript / TypeScript
 
 ```typescript
-const API_BASE = process.env.CAMPUSSTATUS_URL ?? 'http://localhost:3000';
+const API_BASE = process.env.CAMPUSSTATUS_URL ?? 'https://campu-status.vercel.app';
 
 export class CampusStatusApiError extends Error {
   constructor(
@@ -348,7 +348,7 @@ type AcceptedLevel = {
 ```python
 import requests
 
-API_BASE = "http://localhost:3000"
+API_BASE = "https://campu-status.vercel.app"
 
 def fetch_zones():
     response = requests.get(f"{API_BASE}/api/zones", timeout=10)
@@ -377,16 +377,16 @@ def submit_vote(zone_id: str, level_id: str):
 
 ```bash
 # Health check
-curl -s http://localhost:3000/api/health | jq
+curl -s https://campu-status.vercel.app/api/health | jq
 
 # Listar zonas
-curl -s http://localhost:3000/api/zones | jq
+curl -s https://campu-status.vercel.app/api/zones | jq
 
 # Detalle de una zona
-curl -s http://localhost:3000/api/zones/biblioteca | jq
+curl -s https://campu-status.vercel.app/api/zones/biblioteca | jq
 
 # Registrar reporte (requiere IP del campus)
-curl -s -X POST http://localhost:3000/api/zones/biblioteca/vote \
+curl -s -X POST https://campu-status.vercel.app/api/zones/biblioteca/vote \
   -H "Content-Type: application/json" \
   -d '{"levelId":"moderado"}' | jq
 ```

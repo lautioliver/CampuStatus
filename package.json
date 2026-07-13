@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node node_modules/next/dist/bin/next dev",
     "build": "node node_modules/next/dist/bin/next build",
+    "vercel-build": "node node_modules/prisma/build/index.js generate && node node_modules/prisma/build/index.js migrate deploy && node --import tsx prisma/seed.ts && node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "node node_modules/next/dist/bin/next lint",
     "db:generate": "node node_modules/prisma/build/index.js generate",
