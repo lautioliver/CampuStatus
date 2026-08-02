@@ -2,6 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+
+/**
+ * Tiempo de cooldown en milisegundos
+ * 0 = sin cooldown
+ * 30 minutos: 30 * 60 * 1000
+ */
+
 const COOLDOWN_MS = 0; // 30 minutos: 30 * 60 * 1000
 const storageKey = (zoneId: string) => `campusstatus:lastVote:${zoneId}`;
 

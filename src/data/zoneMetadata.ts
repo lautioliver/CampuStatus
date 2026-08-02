@@ -4,17 +4,17 @@ export const zoneMetadata: Record<
   { location: string; category: string; icon: string }
 > = {
   biblioteca: {
-    location: 'Edificio Central · Planta baja',
+    location: 'Edificio Central',
     category: 'biblioteca',
     icon: 'book',
   },
   buffet: {
-    location: 'Facultad de Ingeniería · PB',
+    location: 'Buffet (Come Sano)',
     category: 'comida',
     icon: 'utensils',
   },
   carritos: {
-    location: 'Patio central · Sector norte',
+    location: 'Carritos',
     category: 'comida',
     icon: 'cart',
   },
