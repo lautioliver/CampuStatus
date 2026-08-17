@@ -57,7 +57,16 @@ export function isTrustProxyEnabled(): boolean {
   return process.env.TRUST_PROXY === 'true';
 }
 
+// TEMPORAL: permitir votos desde cualquier IP hasta tener las IPs reales
+// de la universidad. Poner en `false` y actualizar ALLOWED_CAMPUS_IPS
+// cuando estén confirmadas.
+const SKIP_CAMPUS_IP_CHECK = true;
+
 export async function isCampusIpAllowed(req: NextRequest): Promise<boolean> {
+  if (SKIP_CAMPUS_IP_CHECK) {
+    return true;
+  }
+
   const trustProxy = isTrustProxyEnabled();
   const clientIp = getClientIp(req, trustProxy);
   const allowedIps = await getAllowedCampusIps();
