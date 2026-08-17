@@ -83,7 +83,8 @@ async function testHttpLayer() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ levelId: 'moderado' }),
     });
-    assert(voteRes.status === 403, 'POST vote desde localhost debe responder 403 fuera del campus');
+    // TEMPORAL: el check de IP de campus está desactivado hasta tener las IPs reales.
+    assert(voteRes.status === 201, 'POST vote debe aceptarse mientras el check de IP está desactivado');
   } catch (error) {
     console.warn('HTTP smoke omitido: no se pudo conectar a', BASE_URL, error);
   }
